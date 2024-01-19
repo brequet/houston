@@ -5,6 +5,8 @@
 </script>
 
 <main>
+  <!-- <h1 class=" bg-red-500">SALUT</h1> -->
+
   <div>
     <a href="https://vitejs.dev" target="_blank" rel="noreferrer">
       <img src={viteLogo} class="logo" alt="Vite Logo" />
