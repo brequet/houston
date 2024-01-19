@@ -14,6 +14,9 @@ dependencies:
   lucide-svelte:
     specifier: ^0.312.0
     version: 0.312.0(svelte@4.2.9)
+  svelte-spa-router:
+    specifier: ^4.0.1
+    version: 4.0.1
   tailwind-merge:
     specifier: ^2.2.0
     version: 2.2.0
@@ -1236,6 +1239,11 @@ packages:
     resolution: {integrity: sha512-dYnhHh0nJoMfnkZs6GmmhFknAGRrLznOu5nc9ML+EJxGvrx6H7teuevqVqCuPcPK//3eDrrjQhehXVx9cnkGdw==}
     dev: false
 
+  /regexparam@2.0.2:
+    resolution: {integrity: sha512-A1PeDEYMrkLrfyOwv2jwihXbo9qxdGD3atBYQA9JJgreAx8/7rC6IUkWOw2NQlOxLp2wL0ifQbh1HuidDfYA6w==}
+    engines: {node: '>=8'}
+    dev: false
+
   /resolve-from@4.0.0:
     resolution: {integrity: sha512-pb/MYmXstAkysRFx8piNI1tGFNQIFA3vkE3Gq4EuA1dF6gHp/+vgZqsCGJapvy8N3Q+4o7FwvquPJcnZ7RYy4g==}
     engines: {node: '>=4'}
@@ -1467,6 +1475,12 @@ packages:
       svelte: 4.2.9
       typescript: 5.3.3
     dev: true
+
+  /svelte-spa-router@4.0.1:
+    resolution: {integrity: sha512-2JkmUQ2f9jRluijL58LtdQBIpynSbem2eBGp4zXdi7aDY1znbR6yjw0KsonD0aq2QLwf4Yx4tBJQjxIjgjXHKg==}
+    dependencies:
+      regexparam: 2.0.2
+    dev: false
 
   /svelte@4.2.9:
     resolution: {integrity: sha512-hsoB/WZGEPFXeRRLPhPrbRz67PhP6sqYgvwcAs+gWdSQSvNDw+/lTeUJSWe5h2xC97Fz/8QxAOqItwBzNJPU8w==}

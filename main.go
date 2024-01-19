@@ -10,9 +10,12 @@ import (
 	"strconv"
 )
 
-//go:embed front/dist/*
-var content embed.FS
-var webAppPort int
+var (
+	//go:embed front/dist/*
+	content embed.FS
+
+	webAppPort int
+)
 
 func main() {
 	if len(os.Args) > 1 {
@@ -22,7 +25,7 @@ func main() {
 		}
 		webAppPort = port
 	} else {
-		// Default to port 3000 if no argument is provided
+		// Default
 		webAppPort = 3000
 	}
 
