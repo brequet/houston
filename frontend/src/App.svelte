@@ -4,7 +4,9 @@
   import type { ComponentType } from "svelte";
   import Router, { location } from "svelte-spa-router";
   import DashboardPage from "./routes/DashboardPage.svelte";
-  import ScriptsPage from "./routes/ScriptsPage.svelte";
+  import ScriptsPage from "./routes/scripts-page/ScriptsPage.svelte";
+  import { flip } from "svelte/animate";
+  import { quintOut } from "svelte/easing";
 
   const navItems: {
     name: string;
@@ -40,11 +42,7 @@
     <h2 class="text-xl font-semibold py-2 px-4 tracking-tight">Overview</h2>
     <div class="grid items-start gap-2">
       {#each navItems as navItem}
-        <Button
-          href="#{navItem.path}"
-          class="flex-grow justify-start"
-          variant={$location === navItem.path ? "secondary" : "ghost"}
-        >
+        <Button href="#{navItem.path}" class="flex-grow justify-start" variant={$location === navItem.path ? "secondary" : "ghost"}>
           <svelte:component this={navItem.icon} class="mr-2 w-4 h-4" />
           {navItem.name}
         </Button>
@@ -52,7 +50,7 @@
     </div>
   </nav>
 
-  <main class="flex-grow m-4">
+  <main class="flex-grow shrink overflow-auto flex flex-col">
     <Router {routes} />
   </main>
 </div>

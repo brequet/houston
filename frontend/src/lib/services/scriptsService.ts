@@ -8,6 +8,7 @@ export interface FileDetails {
 export interface ScriptExecutionResponse {
     output: string;
     error?: string;
+    scriptName: string;
 }
 
 export const scriptsService = {
