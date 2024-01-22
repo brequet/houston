@@ -13,7 +13,7 @@ export interface ScriptExecutionResponse {
 
 export const scriptsService = {
     async getScripts(): Promise<FileDetails[]> {
-        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/scripts`);
+        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/scripts`);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -21,7 +21,7 @@ export const scriptsService = {
         return scripts;
     },
     async executeScriptByName(scriptName: string): Promise<ScriptExecutionResponse> {
-        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/api/script/execute`, {
+        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/script/execute`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

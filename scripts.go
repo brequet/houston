@@ -40,8 +40,6 @@ func ExecuteScriptByName(scriptName string) (string, error) {
 	cmd := exec.Command(POWERSHELL_CMD, "-ExecutionPolicy", "Bypass", "-File", scriptPath)
 
 	out, outErr := cmd.CombinedOutput()
-	log.Println("out", string(out))
-	log.Println("outErr", outErr)
 	return string(out), outErr
 }
 

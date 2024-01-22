@@ -71,7 +71,8 @@
           <X />
         </Button>
       </div>
-      <div class="bg-slate-200 whitespace-pre overflow-y-auto flex-grow">
+      <!-- TODO: terminal component -->
+      <div class="whitespace-pre overflow-y-auto flex-grow bg-black text-white font-mono">
         {@html scriptResponse.output.split("\n\r").join("<br>")}
       </div>
     {/each}
