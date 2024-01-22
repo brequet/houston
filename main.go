@@ -65,7 +65,7 @@ func corsMiddleware(handler http.Handler) http.Handler {
 }
 
 func handleSpa(r *mux.Router) {
-	webPage, err := fs.Sub(content, "front/dist")
+	webPage, err := fs.Sub(content, "frontend/dist")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -113,5 +113,8 @@ func handlePostExecuteScript(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(map[string]string{"output": output})
+	json.NewEncoder(w).Encode(map[string]string{
+		"output":     output,
+		"scriptName": reqBody.ScriptName,
+	})
 }
