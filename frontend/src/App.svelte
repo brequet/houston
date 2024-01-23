@@ -3,10 +3,9 @@
   import { LayoutDashboard, Terminal } from "lucide-svelte";
   import type { ComponentType } from "svelte";
   import Router, { location } from "svelte-spa-router";
+  import favicon from "./assets/svelte.svg";
   import DashboardPage from "./routes/DashboardPage.svelte";
   import ScriptsPage from "./routes/scripts-page/ScriptsPage.svelte";
-  import { flip } from "svelte/animate";
-  import { quintOut } from "svelte/easing";
 
   const navItems: {
     name: string;
@@ -36,6 +35,10 @@
     {} as Record<string, ComponentType>,
   );
 </script>
+
+<svelte:head>
+  <link rel="icon" type="image/svg" href={favicon} />
+</svelte:head>
 
 <div class="w-screen h-screen flex flex-row">
   <nav class="w-60 border-r py-2 px-2">
