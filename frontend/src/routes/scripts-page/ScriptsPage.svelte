@@ -32,6 +32,7 @@
 
   async function closeScriptTab(event: CustomEvent<{ tabName: string }>) {
     scriptsOutputs.delete(event.detail.tabName);
+    console.log("close", event.detail.tabName, scriptsOutputs);
     scriptsOutputs = scriptsOutputs;
   }
 </script>

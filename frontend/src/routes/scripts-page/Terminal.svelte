@@ -10,39 +10,42 @@
 
   const dispatch = createEventDispatcher();
 
-  let selectedScriptTab: ScriptExecutionResponse | undefined = undefined;
+  $: console.log("CHANGED", scriptsExecutionResponses);
 
-  $: if (scriptsExecutionResponses.length > 0 && selectedScriptTab === undefined) {
-    selectedScriptTab = getDefaultScriptTab();
+  let selectedScriptTabIndex: number | undefined = undefined;
+
+  $: if (scriptsExecutionResponses.length > 0 && selectedScriptTabIndex === undefined) {
+    selectedScriptTabIndex = getDefaultScriptTabIndex();
+    console.log("CHANGED here ?", scriptsExecutionResponses);
   }
 
-  function getDefaultScriptTab(): ScriptExecutionResponse | undefined {
+  function getDefaultScriptTabIndex(): number | undefined {
     if (scriptsExecutionResponses.length === 0) {
       return undefined;
     }
-    return scriptsExecutionResponses[0];
+    return scriptsExecutionResponses.length - 1;
   }
 
-  function selectTab(scriptName: string) {
-    selectedScriptTab = scriptsExecutionResponses.find((e) => e.scriptName === scriptName);
+  function selectTab(tabIndex: number) {
+    selectedScriptTabIndex = tabIndex;
   }
 
-  async function closeScriptTab(scriptName: string) {
-    dispatch("closeTab", { tabName: scriptName });
-    if (selectedScriptTab?.scriptName === scriptName) {
-      selectedScriptTab = undefined;
+  async function closeScriptTab(tabIndex: number) {
+    dispatch("closeTab", { tabName: scriptsExecutionResponses[tabIndex].scriptName });
+    if (selectedScriptTabIndex === tabIndex) {
+      selectedScriptTabIndex = undefined;
     }
   }
 </script>
 
-{#if scriptsExecutionResponses.length > 0 && selectedScriptTab !== undefined}
-  <div transition:fly={{ delay: 250, duration: 300, y: 500, opacity: 0.5, easing: quintOut }} class="flex-grow flex flex-col h-1/2 border-t">
+{#if scriptsExecutionResponses.length > 0 && selectedScriptTabIndex !== undefined}
+  <div transition:fly={{ duration: 300, y: 500, opacity: 0.5, easing: quintOut }} class="flex-grow flex flex-col h-1/2 border-t">
     <div class="bg-slate-50 flex flex-row items-center">
-      {#each scriptsExecutionResponses as scriptExecutionResponse}
+      {#each scriptsExecutionResponses as scriptExecutionResponse, tabIndex}
         {@const tabScriptName = scriptExecutionResponse.scriptName}
-        <button class="flex flex-row items-center pl-1 {tabScriptName === selectedScriptTab.scriptName ? 'bg-slate-300' : 'bg-slate-200'}" on:click={() => selectTab(tabScriptName)}>
+        <button class="flex flex-row items-center pl-1 {tabIndex === selectedScriptTabIndex ? 'bg-slate-300' : 'bg-slate-200'}" on:click={() => selectTab(tabIndex)}>
           <h2>{tabScriptName}</h2>
-          <Button variant="ghost" size="icon" on:click={() => closeScriptTab(tabScriptName)}>
+          <Button variant="ghost" size="icon" on:click={() => closeScriptTab(tabIndex)}>
             <X />
           </Button>
         </button>
@@ -51,7 +54,7 @@
 
     <!-- TODO: terminal component -->
     <div class="whitespace-pre overflow-y-auto flex-grow bg-black text-white font-mono">
-      {@html selectedScriptTab.output.split("\n\r").join("<br>")}
+      {@html scriptsExecutionResponses[selectedScriptTabIndex]?.output.split("\n\r").join("<br>")}
     </div>
   </div>
 {/if}
