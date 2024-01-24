@@ -1,11 +1,12 @@
 <script lang="ts">
   import { Button } from "$lib/components/ui/button";
-  import { LayoutDashboard, Terminal } from "lucide-svelte";
+  import { Cog, LayoutDashboard, Terminal } from "lucide-svelte";
   import type { ComponentType } from "svelte";
   import Router, { location } from "svelte-spa-router";
   import favicon from "./assets/svelte.svg";
   import DashboardPage from "./routes/DashboardPage.svelte";
   import ScriptsPage from "./routes/scripts-page/ScriptsPage.svelte";
+  import ServicesPage from "./routes/services-page/ServicesPage.svelte";
 
   const navItems: {
     name: string;
@@ -21,9 +22,15 @@
     },
     {
       name: "Scripts",
-      path: "/script",
+      path: "/scripts",
       component: ScriptsPage,
       icon: Terminal,
+    },
+    {
+      name: "Services",
+      path: "/services",
+      component: ServicesPage,
+      icon: Cog,
     },
   ];
 

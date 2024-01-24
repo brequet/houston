@@ -76,6 +76,8 @@ func handleSpa(r *mux.Router) {
 func handleApi(r *mux.Router) {
 	r.HandleFunc("/api/scripts", handleGetScripts).Methods("GET")
 	r.HandleFunc("/api/script/execute", handlePostExecuteScript).Methods("POST")
+
+	r.HandleFunc("/api/services", handleGetServices).Methods("GET")
 }
 
 func handleGetScripts(w http.ResponseWriter, r *http.Request) {
@@ -117,4 +119,23 @@ func handlePostExecuteScript(w http.ResponseWriter, r *http.Request) {
 		"output":     output,
 		"scriptName": reqBody.ScriptName,
 	})
+}
+
+func handleGetServices(w http.ResponseWriter, r *http.Request) {
+	services, err := GetAllServices()
+	if err != nil {
+		log.Println("Could not fetch all services", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	data, err := json.Marshal(services)
+	if err != nil {
+		log.Println("Could marshal services", err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(data)
 }
