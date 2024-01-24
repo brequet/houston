@@ -6,6 +6,8 @@
   import { Play } from "lucide-svelte";
   import { onMount } from "svelte";
   import Terminal from "./Terminal.svelte";
+  import pythonIcon from "../../assets/icons/python.svg";
+  import FileIcon from "$lib/components/FileIcon.svelte";
 
   let scripts: Array<FileDetails> | undefined = undefined;
 
@@ -43,7 +45,10 @@
         <li>
           <Card.Root>
             <Card.Header>
-              <Card.Title>{script.name}</Card.Title>
+              <Card.Title class="flex items-center space-x-2">
+                <FileIcon filename={script.name} class="w-6 h-6 mr-2" />
+                {script.name}
+              </Card.Title>
             </Card.Header>
             <Card.Content class="flex justify-between">
               <span>
