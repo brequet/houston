@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strings"
 	"time"
 )
 
@@ -13,6 +14,17 @@ const (
 	POWERSHELL_CMD     = `C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe`
 	SCRIPT_FOLDER_PATH = "./default-scripts"
 )
+
+type CommandData struct {
+	Name      string
+	Extension string
+	Parameter string
+}
+
+var CommandMap = map[string]CommandData{
+	"ps1": {Name: "powershell", Extension: "ps1", Parameter: "-ExecutionPolicy Bypass -File"},
+	"py":  {Name: "python", Extension: "py", Parameter: ""},
+}
 
 type FileDetails struct {
 	Name      string    `json:"name"`
@@ -36,11 +48,24 @@ func ExecuteScriptByName(scriptName string) (string, error) {
 		}
 	}
 
-	log.Printf("Running script: '%s'\n", scriptPath)
-	cmd := exec.Command(POWERSHELL_CMD, "-ExecutionPolicy", "Bypass", "-File", scriptPath)
+	extension := getFileExtension(scriptName)
+	command, ok := CommandMap[extension]
+	if !ok {
+		return "", fmt.Errorf("Script type not handled: '%s'\n", getFileExtension(scriptName))
+	}
+	args := constructArgs(command.Parameter, scriptPath)
+
+	log.Printf("Running script: %s %s\n", command.Name, args)
+	cmd := exec.Command(command.Name, args...)
 
 	out, outErr := cmd.CombinedOutput()
 	return string(out), outErr
+}
+
+func constructArgs(commmandParameter, targetFile string) []string {
+	args := strings.Fields(commmandParameter)
+	args = append(args, targetFile)
+	return args
 }
 
 func GetAllScripts() ([]FileDetails, error) {
@@ -78,4 +103,13 @@ func getFilesInFolder(folderPath string) ([]FileDetails, error) {
 	}
 
 	return result, nil
+}
+
+func getFileExtension(filename string) string {
+	ext := filepath.Ext(filename)
+	if ext == "" {
+		fmt.Println("The file has no extension")
+		return ""
+	}
+	return ext[1:] // skip the dot
 }
